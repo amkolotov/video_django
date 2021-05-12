@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Добавление видео
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-3 text-center">Добавление видео</h1>
+    <form method="post" action="{% url 'main_app:add_video' %}" enctype="multipart/form-data" class="mb-5">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="form-control mt-5 btn btn-secondary" value="Сохранить">
+    </form>
+</div>
+{% endblock %}

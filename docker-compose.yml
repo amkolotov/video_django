@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+
+  web:
+    container_name: video_django
+    restart: always
+    build: .
+    ports:
+      - 8000:8000
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=video_postgres
+      - DB_PORT=5432
+      - DB_NAME=video
+      - DB_USER=video_user
+      - DB_PASS=video_pass
+    volumes:
+      - media_volume:/home/app/web/media
+    depends_on:
+      - db
+
+  db:
+    container_name: video_postgres
+    restart: always
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=video_user
+      - POSTGRES_PASSWORD=video_pass
+      - POSTGRES_DB=video
+
+volumes:
+  postgres_data:
+  media_volume:

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Вход
+{% endblock %}
+
+{% block content %}
+
+<div class="container login">
+
+
+    <form action="{% url 'auth_app:login' %}" method="post">
+        {% csrf_token %}
+
+        {% if next %}
+            {% if 'review' in next %}
+            <h5 class="text-center mb-4">Для добавления отзыва необходимо авторизоваться</h5>
+            {% else %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+        {% endif %}
+
+        {{ form.as_p }}
+
+        <input type="submit" class="form-control mt-5 btn btn-secondary" value="Войти">
+    </form>
+
+    <button class="form-control mt-5 btn btn-light text-white">
+        <a href="{% url 'auth_app:register' %}">Зарегистрироваться</a>
+    </button>
+
+</div>
+
+{% endblock %}

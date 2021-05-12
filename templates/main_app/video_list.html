@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Главная | blog
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="article row">
+
+        {% for video in object_list %}
+
+        <div class="col-sm-4">
+            {% if video.author %}
+            <div class="author my-3">
+                автор: {{ video.author.username }}
+            </div>
+            {% endif %}
+
+            <a href="{% url 'main_app:video' video.pk %}">
+                <div class="title mb-3">
+                    <p>{{ video.title }}</p>
+                </div>
+            </a>
+
+            <a href="{% url 'main_app:video' video.pk %}">
+                <div class="poster mb-4">
+                    <img src="{% get_media_prefix %}{{ video.preview }}" alt="poster">
+                </div>
+            </a>
+
+            <p align="justify">{{ video.description }}</p>
+
+        </div>
+        {% empty %}
+
+        <h1 class="mt-5">К сожалению, на данный момент нет активного видео контента!</h1>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
+

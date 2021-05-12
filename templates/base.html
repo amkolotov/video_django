@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+    {% endblock %}
+
+
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+
+{% block navbar %}
+<div class="container-fluid fixed-top p-0">
+
+    <div class="container-fluid menu">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col m-auto p-0 d-flex justify-content-between">
+                    <div class="col label m-auto p-0">
+                        <span>Video</span>
+                    </div>
+                    <div class="col mx-0">
+                        <a class="p-0" href="{% url 'main_app:add_video' %}"><span>Добавить видео</span></a>
+                    </div>
+                    <div class="col mx-0">
+                        <a class="p-0" href="{% url 'main_app:video_list' %}"><span>Все видео</span></a>
+                    </div>
+
+                    {% if user.is_authenticated %}
+
+                    <div class="col">
+                        <a class="p-2" href="{% url 'auth_app:logout' %}">Выйти</a>
+                    </div>
+                    <div class="col">
+                        <a class="p-2" href="{% url 'main_app:user_video' %}">Мои видео</a>
+                    </div>
+
+                    {% else %}
+
+                    <div class="col">
+                        <a class="p-2" href="{% url 'auth_app:login' %}">Войти</a>
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if user.is_superuser %}
+                    <div class="col">
+                        <a class="p-2" href="{% url 'admin:index' %}">Админка</a>
+                    </div>
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+
+{% endblock %}
+
+<div class="content">
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+{% block footer %}
+<footer class="footer">
+    <div class="basement">
+        <div class="container">
+            <div class="years d-flex justify-content-between">
+                <p><b>© 2021 ООО “Видео”.</b> Копирование запрещено</p>
+                <p>Политика конфиденциальности</p>
+
+            </div>
+        </div>
+    </div>
+
+
+</footer>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}
+
+
+</body>
+</html>
